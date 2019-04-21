@@ -16,60 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `app_role`
---
-
-DROP TABLE IF EXISTS `app_role`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `app_role` (
-  `ROLE_ID` bigint(20) NOT NULL,
-  `ROLE_NAME` varchar(30) NOT NULL,
-  PRIMARY KEY (`ROLE_ID`),
-  UNIQUE KEY `APP_ROLE_UK` (`ROLE_NAME`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `app_role`
---
-
-LOCK TABLES `app_role` WRITE;
-/*!40000 ALTER TABLE `app_role` DISABLE KEYS */;
-INSERT INTO `app_role` VALUES (1,'ROLE_ADMIN'),(0,'ROLE_USER');
-/*!40000 ALTER TABLE `app_role` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `app_user`
---
-
-DROP TABLE IF EXISTS `app_user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `app_user` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `fname` varchar(20) NOT NULL,
-  `lname` varchar(30) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `password` varchar(50) DEFAULT NULL,
-  `admin` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `app_user`
---
-
-LOCK TABLES `app_user` WRITE;
-/*!40000 ALTER TABLE `app_user` DISABLE KEYS */;
-INSERT INTO `app_user` VALUES (1,'Bob','Hooper','bob.hooper@gmail.com','Abc@123Abc',0),(2,'Bob','Hope','bob.hope@gmail.com','Abc@123Abc',1),(3,'Donald','Smith','dsmith@hotmail.com','Bas#1234',0),(4,'Bob','Schnieder','bs@hotmail.com','Bas#1234',0);
-/*!40000 ALTER TABLE `app_user` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `characters`
 --
 
@@ -102,12 +48,12 @@ DROP TABLE IF EXISTS `deathpool`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `deathpool` (
-  `userid` bigint(20) NOT NULL,
+  `userid` int(11) NOT NULL,
   `characterid` int(11) NOT NULL,
   `status` varchar(20) NOT NULL,
   PRIMARY KEY (`userid`,`characterid`),
   KEY `characterid` (`characterid`),
-  CONSTRAINT `deathpool_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `app_user` (`id`),
+  CONSTRAINT `deathpool_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `user` (`id`),
   CONSTRAINT `deathpool_ibfk_2` FOREIGN KEY (`characterid`) REFERENCES `characters` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -120,6 +66,35 @@ LOCK TABLES `deathpool` WRITE;
 /*!40000 ALTER TABLE `deathpool` DISABLE KEYS */;
 /*!40000 ALTER TABLE `deathpool` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fname` varchar(20) NOT NULL,
+  `lname` varchar(30) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `password` varchar(50) DEFAULT NULL,
+  `admin` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'Bob','Hope','bob.hope@heaven.com','Cas#1796',0);
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -130,4 +105,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-18  6:10:54
+-- Dump completed on 2019-04-17 21:14:20
